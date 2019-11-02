@@ -3,20 +3,24 @@
   "title": "workout",
   "type": "object",
   "properties": {
-    "workoutType": {
+    "workoutDate": {
       "type": "string"
     },
-    "dueDate": {
-      "type": "string"
+    "workoutDistance": {
+      "type": "number"
     },
-    "done": {
+    "workoutTime": {
+      "type": "number"
+    },
+    "favorite": {
       "type": "boolean"
     }
   },
   "required": [
-    "workoutType",
-    "dueDate",
-    "done"
+    "workoutDate",
+    "workoutDistance",
+    "workoutTime",
+    "favorite"
   ],
   "additionalProperties": false
 }

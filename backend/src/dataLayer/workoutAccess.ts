@@ -13,7 +13,7 @@ export class WorkoutAccess {
   constructor(
     private readonly docClient: DocumentClient = createDynamoDBClient(),
     private readonly workoutTable = process.env.WORKOUTS_TABLE,
-    private readonly workoutUsrIndx = process.env.WORKOUTS_USR_INDX
+    private readonly workoutUsrIndx = process.env.WORKOUT_USR_INDX
     ) {
   }
 
@@ -74,15 +74,12 @@ export class WorkoutAccess {
         Key:{
           "workoutId": workoutId
         },
-        UpdateExpression: "set #nm = :workoutName, dueDate = :dueDate, done = :done",
+        UpdateExpression: "set workoutDate = :workoutDate, workoutDistance = :workoutDistance, workoutTime = :workoutTime, favorite = :favorite",
         ExpressionAttributeValues: {
-          ":workoutName": updatedWorkout.name,
-          ':dueDate': updatedWorkout.dueDate,
-          ":done": updatedWorkout.done   
-        },
-        ExpressionAttributeNames: {
-  //Using expression for name field since name is reserved word for DynamoDB on Updates
-          "#nm": "name"
+          ":workoutDate": updatedWorkout.workoutDate,
+          ":workoutDistance": updatedWorkout.workoutDistance,
+          ":workoutTime": updatedWorkout.workoutTime,
+          ":favorite": updatedWorkout.favorite
         },
         ReturnValues: "UPDATED_NEW"
     }).promise()
