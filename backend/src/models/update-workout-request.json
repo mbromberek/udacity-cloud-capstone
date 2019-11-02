@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "workout",
+  "type": "object",
+  "properties": {
+    "workoutType": {
+      "type": "string"
+    },
+    "dueDate": {
+      "type": "string"
+    },
+    "done": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "workoutType",
+    "dueDate",
+    "done"
+  ],
+  "additionalProperties": false
+}

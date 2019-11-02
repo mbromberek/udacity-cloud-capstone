@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "workout",
+  "type": "object",
+  "properties": {
+    "workoutType": {
+      "type": "string"
+    },
+    "workoutDate": {
+      "type": "string"
+    },
+    "workoutDistance": {
+      "type": "number"
+    },
+    "workoutTime": {
+      "type": "number"
+    }    
+  },
+  "required": [
+    "workoutType",
+    "workoutDate",
+    "workoutDistance",
+    "workoutTime"
+  ],
+  "additionalProperties": false
+}
+
+
