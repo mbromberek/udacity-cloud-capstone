@@ -26,6 +26,8 @@ interface WorkoutsProps {
 interface WorkoutsState {
   workouts: WorkoutItem[]
   newWorkoutType: string
+  newWorkoutDistance: number
+  newWorkoutTime: number
   loadingWorkouts: boolean
 }
 
@@ -33,11 +35,21 @@ export class Workouts extends React.PureComponent<WorkoutsProps, WorkoutsState> 
   state: WorkoutsState = {
     workouts: [],
     newWorkoutType: '',
+    newWorkoutDistance: 0,
+    newWorkoutTime: 0,
     loadingWorkouts: true
   }
 
   handleWorkoutTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ newWorkoutType: event.target.value })
+  }
+
+  handleWorkoutDistanceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ newWorkoutDistance: parseInt(event.target.value, 10) })
+  }
+
+  handleWorkoutTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ newWorkoutTime: parseInt(event.target.value, 10) })
   }
 
   onEditButtonClick = (workoutId: string) => {
@@ -49,16 +61,17 @@ export class Workouts extends React.PureComponent<WorkoutsProps, WorkoutsState> 
       const workoutDate = this.calculateWorkoutDate()
       //TODO Need to get actual workoutTime and workoutDistance from UI
       const workoutTime = 99
-      const workoutDistance = 1
       const newWorkout = await createWorkout(this.props.auth.getIdToken(), {
         workoutType: this.state.newWorkoutType,
-        workoutDate,
-        workoutDistance,
-        workoutTime
+        workoutDistance: this.state.newWorkoutDistance,
+        workoutTime: this.state.newWorkoutTime,
+        workoutDate: this.calculateWorkoutDate()
       })
       this.setState({
         workouts: [...this.state.workouts, newWorkout],
-        newWorkoutType: ''
+        newWorkoutType: '',
+        newWorkoutDistance: 0,
+        newWorkoutTime: 0
       })
     } catch {
       alert('Workout creation failed')
@@ -82,8 +95,8 @@ export class Workouts extends React.PureComponent<WorkoutsProps, WorkoutsState> 
       await patchWorkout(this.props.auth.getIdToken(), workout.workoutId, {
         workoutDate: workout.workoutDate,
         favorite: !workout.favorite,
-        workoutDistance: 1,
-        workoutTime: 99
+        workoutDistance: workout.workoutDistance,
+        workoutTime: workout.workoutTime
       })
       this.setState({
         workouts: update(this.state.workouts, {
@@ -110,7 +123,7 @@ export class Workouts extends React.PureComponent<WorkoutsProps, WorkoutsState> 
   render() {
     return (
       <div>
-        <Header as="h1">WORKOUTSs</Header>
+        <Header as="h1">WORKOUTS</Header>
 
         {this.renderCreateWorkoutInput()}
 
@@ -133,9 +146,24 @@ export class Workouts extends React.PureComponent<WorkoutsProps, WorkoutsState> 
             }}
             fluid
             actionPosition="left"
-            placeholder="To change the world..."
+            placeholder="Run"
             onChange={this.handleWorkoutTypeChange}
           />
+          Distance (miles):
+          <Input
+            fluid
+            placeholder="2"
+            type="number"
+            onChange={this.handleWorkoutDistanceChange}
+          />
+          Time (minutes):
+          <Input
+            fluid
+            placeholder="2"
+            type="number"
+            onChange={this.handleWorkoutTimeChange}
+          />
+
         </Grid.Column>
         <Grid.Column width={16}>
           <Divider />
@@ -168,16 +196,26 @@ export class Workouts extends React.PureComponent<WorkoutsProps, WorkoutsState> 
         {this.state.workouts.map((workout, pos) => {
           return (
             <Grid.Row key={workout.workoutId}>
-              <Grid.Column width={1} verticalAlign="middle">
+              <Grid.Column width={2} verticalAlign="middle">
+                Favorite
                 <Checkbox
                   onChange={() => this.onWorkoutCheck(pos)}
                   checked={workout.favorite}
                 />
               </Grid.Column>
-              <Grid.Column width={10} verticalAlign="middle">
+              <Grid.Column width={2} verticalAlign="middle">
                 {workout.workoutType}
               </Grid.Column>
-              <Grid.Column width={3} floated="right">
+              <Grid.Column width={2} verticalAlign="middle">
+                {workout.workoutDistance} miles
+              </Grid.Column>
+              <Grid.Column width={2} verticalAlign="middle">
+                {workout.workoutTime} minutes
+              </Grid.Column>
+              <Grid.Column width={3} verticalAlign="middle">
+                {workout.workoutPace} minutes per mile
+              </Grid.Column>
+              <Grid.Column width={2} verticalAlign="middle" floated="right">
                 {workout.workoutDate}
               </Grid.Column>
               <Grid.Column width={1} floated="right">

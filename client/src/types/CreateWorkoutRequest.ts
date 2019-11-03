@@ -3,8 +3,8 @@
  */
 export interface CreateWorkoutRequest {
   workoutType: string
-  workoutDate: string
   workoutDistance: number
   workoutTime: number
+  workoutDate: string
 }
 

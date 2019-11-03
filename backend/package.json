@@ -28,6 +28,6 @@
     "typescript": "^3.4.1",
     "webpack": "^4.29.6"
   },
-  "author": "Ivan Mushketyk",
+  "author": "Mike Bromberek",
   "license": "MIT"
 }
