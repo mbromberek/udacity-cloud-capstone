@@ -74,12 +74,13 @@ export class WorkoutAccess {
         Key:{
           "workoutId": workoutId
         },
-        UpdateExpression: "set workoutDate = :workoutDate, workoutDistance = :workoutDistance, workoutTime = :workoutTime, favorite = :favorite",
+        UpdateExpression: "set workoutDate = :workoutDate, workoutDistance = :workoutDistance, workoutTime = :workoutTime, favorite = :favorite, workoutPace = :workoutPace",
         ExpressionAttributeValues: {
           ":workoutDate": updatedWorkout.workoutDate,
           ":workoutDistance": updatedWorkout.workoutDistance,
           ":workoutTime": updatedWorkout.workoutTime,
-          ":favorite": updatedWorkout.favorite
+          ":favorite": updatedWorkout.favorite,
+          ":workoutPace": updatedWorkout.workoutPace
         },
         ReturnValues: "UPDATED_NEW"
     }).promise()

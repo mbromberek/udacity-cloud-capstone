@@ -3,6 +3,7 @@ import 'source-map-support/register'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda'
 // import * as AWS  from 'aws-sdk'
 import { WorkoutAccess } from '../../dataLayer/workoutAccess'
+import { updateWorkout } from '../../businessLogic/workoutLogic'
 import { UpdateWorkoutRequest } from '../../requests/UpdateWorkoutRequest'
 import { createLogger } from '../../utils/logger'
 
@@ -33,8 +34,10 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     }
   }
   
+  
   //Perform update
-  await workoutAccess.updateWorkout(workoutId, updatedWorkout)
+  await updateWorkout(workoutId, updatedWorkout)
+//   await workoutAccess.updateWorkout(workoutId, updatedWorkout)
 
   return {
     statusCode: 200,

@@ -6,4 +6,5 @@ export interface UpdateWorkoutRequest {
   workoutDistance: number
   workoutTime: number
   favorite: boolean
+  workoutPace: number
 }

@@ -7,6 +7,7 @@ export interface WorkoutItem {
   favorite: boolean
   workoutDistance: number
   workoutTime: number
+  workoutPace: number
   attachmentUrl?: string
 }
 
