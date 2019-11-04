@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "d48423ba-4ac0-4b07-b141-004e4407c194",
+		"name": "Udacity Cloud Capstone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Workouts",
+			"item": [
+				{
+					"name": "Get all workouts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-2.amazonaws.com/dev/todos",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create workout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"workoutType\": \"Walk\",\n\t\"workoutDate\": \"2019-10-24\",\n\t\"workoutDistance\": 3,\n\t\"workoutTime\": 60\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-2.amazonaws.com/dev/workouts",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"workouts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update workout",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"workoutType\": \"Run\",\n\t\"workoutDate\": \"2019-11-01\",\n\t\"workoutDistance\": 3,\n\t\"workoutTime\": 28,\n\t\"favorite\": false\n}\n"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-2.amazonaws.com/dev/workouts/b9839421-07a4-4382-82e1-bf1f4391dcd3",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"workouts",
+								"b9839421-07a4-4382-82e1-bf1f4391dcd3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update workout Invalid workout",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Feed the Cat and clean liter box\",\n\t\"dueDate\": \"2019-06-12\",\n\t\"done\": true\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-2.amazonaws.com/dev/workouts/0e957063-2de8-4fe3-8755-f35d2",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"workouts",
+								"0e957063-2de8-4fe3-8755-f35d2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete workout",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-2.amazonaws.com/dev/workouts/a3c4e5aa-52c3-47fb-b834-6dc663308717",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"workouts",
+								"a3c4e5aa-52c3-47fb-b834-6dc663308717"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get attachment URL",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-2.amazonaws.com/dev/workouts/d7ce08ef-a83d-4634-adb0-0db4b673cbf4/attachment",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"workouts",
+								"d7ce08ef-a83d-4634-adb0-0db4b673cbf4",
+								"attachment"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ce2b42d4-8cc5-4f30-a6ed-e7f0f303c3fd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "efb16c49-3866-4241-97d1-360ad72736d8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2e83c0fe-6650-44d5-a90f-4c27ff720d83",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "977c227e-2df3-42eb-9a48-ec25e2f7eeae",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "81dfbae7-07d2-4c8e-95fa-d824040d67a9",
+			"key": "apiId",
+			"value": "jsp6j9jbsb",
+			"type": "string"
+		},
+		{
+			"id": "703b2ae2-b656-4702-9fe8-38822d70cdb5",
+			"key": "authToken",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik0wTkdPREUyTkVJeE56TXlRVGMwTWtNek56Y3pORE15UXpGR1FUQXdORUpFTnpaRVJqQXlNQSJ9.eyJpc3MiOiJodHRwczovL2Rldi01LTg1emdzZy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTE4MzY4Mjc2MDAzODUyODY0MTkiLCJhdWQiOiJSZDZ5ZThSNEd3dUk1VGp2ZGw1UWk4T0FWNWFBZkF4NiIsImlhdCI6MTU3MjMxMDQ4OCwiZXhwIjoxNTcyMzQ2NDg4LCJhdF9oYXNoIjoiS3RuY0RLdUJsVTZVeWRTY1ZLN0ZwZyIsIm5vbmNlIjoiWmNOaEtvYWZ4cUVBUzNmUC1VdUhsd3dZeDRzYVJmTGEifQ.anenLbAoinNH5Hpn3jYQ3u3Hnx5tK2J6izq_2Gcg0ZqXvAc5a6lKUNJIJ4JjBC-aXl3g_-NM_ev1ONlDNUlP5y5qKUk50ZDDrebeVmsciatKtyLDYdiQUFiW8IyICkPiAwWgW_yFpC4orFHQ1Dozp74VispO2ZZZfm6RX34-HFr-jnpYQWJKTkuur0tNEpcmYApH2RMs1kpnuyqeG-7ZpntI_kdrKrcSIJ0cFS85Wan1KoRejqWuDK-OmBLYXMSGCCAkTu_kv3DMeAW46crtEMqXigGYg1Qu6qwG34qPQpLeAd3xRYODPVAEbKuoDymrMnmFsVWNAciOOwv30DIRaQ",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

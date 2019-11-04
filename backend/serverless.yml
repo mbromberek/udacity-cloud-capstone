@@ -22,6 +22,7 @@ provider:
     WORKOUT_ID_INDEX: WorkoutIdIndex
     WORKOUT_USR_INDX: WorkoutUsrIndex
     IMAGES_S3_BUCKET: serverless-workout-images-bromberek-${self:provider.stage}
+    UPDATED_IMG_S3_BUCKET: sls-workout-updt-imgs-bromberek-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
     AUTH_0_SECRET_ID: Auth0Secret-${self:provider.stage}
     AUTH_0_SECRET_FIELD: auth0Secret
@@ -165,6 +166,34 @@ functions:
           - xray:PutTelemetryRecords
         Resource: '*'
 
+  EditImage:
+    handler: src/lambda/s3/editImage.handler
+    events:
+      - sns:
+          arn:
+            Fn::Join:
+              - ':'
+              - - arn:aws:sns
+                - Ref: AWS::Region
+                - Ref: AWS::AccountId
+                - ${self:custom.topicName}
+          topicName: ${self:custom.topicName}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:GetObject
+        Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource: arn:aws:s3:::${self:provider.environment.UPDATED_IMG_S3_BUCKET}/*
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: '*'
+
+
 
 resources:
   Resources:
@@ -256,6 +285,11 @@ resources:
                   AWS:SourceArn: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}
         Topics:
           - !Ref ImagesTopic
+
+    ThumbnailsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.UPDATED_IMG_S3_BUCKET}
 
     ImagesTopic:
       Type: AWS::SNS::Topic
