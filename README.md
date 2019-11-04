@@ -5,6 +5,7 @@ This application is a simple Workout tracking application using AWS Lambda and S
 # Functionality of the application
 
 This application will allow creating/removing/updating/fetching Workouts. It can be used to store details about an Workouts such as distance and duration. Each Workout can have an attachment image. Each user only has access to Workouts that he/she has created.
+Workouts can be favorited. When a workout is created the pace for the workout is automatically calculated. 
 
 # Workout items
 
@@ -21,7 +22,7 @@ The application stores Workout items, and each Workout item contains the followi
 * `userId` (string) - ID of user who created the Workout and has access to view/update it
 
 
-# Functions to be implemented
+# Functions implemented
 
 To implement this project, you need to implement the following functions and configure them in the `serverless.yml` file:
 
@@ -150,14 +151,9 @@ export const authConfig = {
 
 To implement authentication the application is using Auth0. By updating the "domain" and "client id" to the `config.ts` file in the `client` folder. We recommend using asymmetrically encrypted JWT tokens.
 
-#TODO might need to update / remove sections below.
-# Best practices
-
-To complete this exercise, please follow the best practices from the 6th lesson of this course.
-
 ## Logging
 
-The starter code comes with a configured [Winston](https://github.com/winstonjs/winston) logger that creates [JSON formatted](https://stackify.com/what-is-structured-logging-and-why-developers-need-it/) log statements. You can use it to write log messages like this:
+The code comes with a configured [Winston](https://github.com/winstonjs/winston) logger that creates [JSON formatted](https://stackify.com/what-is-structured-logging-and-why-developers-need-it/) log statements. You can use it to write log messages like this:
 
 ```ts
 import { createLogger } from '../../utils/logger'
@@ -172,69 +168,12 @@ logger.info('User was authorized', {
 ```
 
 
-# Grading the submission
-
-Once you have finished developing your application, please set `apiId` and Auth0 parameters in the `config.ts` file in the `client` folder. A reviewer would start the React development server to run the frontend that should be configured to interact with your serverless application.
-
-**IMPORTANT**
-
-*Please leave your application running until a submission is reviewed. If implemented correctly it will cost almost nothing when your application is idle.*
-
-# Suggestions
-
-To store TODO items, you might want to use a DynamoDB table with local secondary index(es). A create a local secondary index you need to create a DynamoDB resource like this:
-
-```yml
-
-TodosTable:
-  Type: AWS::DynamoDB::Table
-  Properties:
-    AttributeDefinitions:
-      - AttributeName: partitionKey
-        AttributeType: S
-      - AttributeName: sortKey
-        AttributeType: S
-      - AttributeName: indexKey
-        AttributeType: S
-    KeySchema:
-      - AttributeName: partitionKey
-        KeyType: HASH
-      - AttributeName: sortKey
-        KeyType: RANGE
-    BillingMode: PAY_PER_REQUEST
-    TableName: ${self:provider.environment.TODOS_TABLE}
-    LocalSecondaryIndexes:
-      - IndexName: ${self:provider.environment.INDEX_NAME}
-        KeySchema:
-          - AttributeName: partitionKey
-            KeyType: HASH
-          - AttributeName: indexKey
-            KeyType: RANGE
-        Projection:
-          ProjectionType: ALL # What attributes will be copied to an index
-
-```
-
-To query an index you need to use the `query()` method like:
-
-```ts
-await this.dynamoDBClient
-  .query({
-    TableName: 'table-name',
-    IndexName: 'index-name',
-    KeyConditionExpression: 'paritionKey = :paritionKey',
-    ExpressionAttributeValues: {
-      ':paritionKey': partitionKeyValue
-    }
-  })
-  .promise()
-```
 
 # How to run the application
 
 ## Backend
 
-To deploy an application run the following commands:
+To deploy the application run the following commands:
 
 ```
 cd backend
@@ -254,9 +193,11 @@ npm run start
 
 This should start a development server with the React application that will interact with the serverless TODO application.
 
+Once you have finished developing your application, please set `apiId` and Auth0 parameters in the `config.ts` file in the `client` folder. A reviewer would start the React development server to run the frontend that should be configured to interact with your serverless application.
+
 # Postman collection
 
-An alternative way to test your API, you can use the Postman collection that contains sample requests. You can find a Postman collection in this project. To import this collection, do the following.
+An alternative way to test the API, you can use the Postman collection that contains sample requests. You can find a Postman collection in this project. To import this collection, do the following.
 
 Click on the import button:
 
