@@ -171,6 +171,14 @@ logger.info('User was authorized', {
 
 # How to run the application
 
+## Setup Account and computer
+1. In AWS IAM page create an account named serverless for deploying, save the credentials shown
+2. On computer install Serverless
+	- `npm install -g serverless`
+3. Run below command using the key and secret from the serverless account creation
+	- `sls config credentials --provider aws --key <Access_Key> --secret <keyfromIAMpage> --profile serverless`
+
+
 ## Backend
 
 To deploy the application run the following commands:
@@ -191,7 +199,7 @@ npm install
 npm run start
 ```
 
-This should start a development server with the React application that will interact with the serverless TODO application.
+This should start a development server with the React application that will interact with the serverless Workout application.
 
 Once you have finished developing your application, please set `apiId` and Auth0 parameters in the `config.ts` file in the `client` folder. A reviewer would start the React development server to run the frontend that should be configured to interact with your serverless application.
 
