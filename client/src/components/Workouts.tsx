@@ -58,9 +58,6 @@ export class Workouts extends React.PureComponent<WorkoutsProps, WorkoutsState> 
 
   onWorkoutCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
     try {
-      const workoutDate = this.calculateWorkoutDate()
-      //TODO Need to get actual workoutTime and workoutDistance from UI
-      const workoutTime = 99
       const newWorkout = await createWorkout(this.props.auth.getIdToken(), {
         workoutType: this.state.newWorkoutType,
         workoutDistance: this.state.newWorkoutDistance,

@@ -26,7 +26,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
 async function processImage(record: S3EventRecord) {
   const key = record.s3.object.key
-  console.log('Processing S3 item with key: ', key)
+  logger.info('Processing S3 item with key: ', {'key': key})
   const response = await s3
     .getObject({
       Bucket: imagesBucketName,
@@ -49,8 +49,8 @@ async function processImage(record: S3EventRecord) {
 //   const body: Buffer = response.Body
 //   const image = await Jimp.read(body)
 // 
-  console.log('Resizing image')
-  image.resize(150, Jimp.AUTO)
+  logger.info('Resizing image')
+  image.resize(300, Jimp.AUTO)
 //   image.print(
 //     font,
 //     textData.placementX,
@@ -59,7 +59,7 @@ async function processImage(record: S3EventRecord) {
 //   )
   const convertedBuffer = await image.getBufferAsync(Jimp.AUTO)
 
-  console.log(`Writing image back to S3 bucket: ${updateImgBucketName}`)
+  logger.info(`Writing image back to S3 bucket: ${updateImgBucketName}`)
   await s3
     .putObject({
       Bucket: updateImgBucketName,
